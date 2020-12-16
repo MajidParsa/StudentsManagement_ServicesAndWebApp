@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{835DB8D2-3775-4886-8EDA-85A68499C948}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web App", "Web App", "{5DBF0D4E-1127-4EAA-BF6C-B2E668225E96}"
+	ProjectSection(SolutionItems) = preProject
+		src\Web App\WebSPA\README.txt = src\Web App\WebSPA\README.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StudentManaging", "StudentManaging", "{67987253-51D0-4C7D-84E3-14CB79641B3F}"
 EndProject
