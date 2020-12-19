@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Data;
+using StudentManaging.API.CustomExtensions;
 
 namespace StudentManaging.API
 {
@@ -18,15 +16,15 @@ namespace StudentManaging.API
 
 		public IConfiguration Configuration { get; }
 
-		public void ConfigureServices(IServiceCollection services)
-		{
-			services
-				.AddDbContext<StudentDbContext>
-				(options => 
-					options.UseSqlServer(Configuration.GetConnectionString("DefaultServer"))
-				)
-				.AddControllers();
-		}
+		public void ConfigureServices(IServiceCollection services) =>
+			services.AddCustomCors()
+				.AddDbContext(Configuration)
+				.AddCustomMvc()
+				.AddCustomSwagger(Configuration)
+				.AddMediatR()
+				.AddRepositories()
+				.AddApplicationServices()
+				.AddInfrastructureServices();
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
