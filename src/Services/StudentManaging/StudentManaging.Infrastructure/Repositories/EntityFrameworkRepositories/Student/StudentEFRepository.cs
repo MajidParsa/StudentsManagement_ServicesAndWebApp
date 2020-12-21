@@ -1,13 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using StudentManaging.Infrastructure.Repositories.DTOs.Student;
+using StudentManaging.Domain.SeedWork;
 
 namespace StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Student
 {
 	public class StudentEFRepository : IStudentEFRepository
 	{
-		public Task<IEnumerable<StudentResultDto>> GetStudents()
+		public IUnitOfWork UnitOfWork { get; }
+		public Domain.AggregatesModel.Student.Student Add(Domain.AggregatesModel.Student.Student student)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Update(Domain.AggregatesModel.Student.Student student)
 		{
 			throw new NotImplementedException();
 		}

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using StudentManaging.Infrastructure.Repositories.DTOs.Student;
+﻿using StudentManaging.Domain.SeedWork;
 
 namespace StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Student
 {
-	public interface IStudentEFRepository
+	public interface IStudentEFRepository : IRepository<Domain.AggregatesModel.Student.Student>
 	{
-		Task<IEnumerable<StudentResultDto>> GetStudents();
+		Domain.AggregatesModel.Student.Student Add(Domain.AggregatesModel.Student.Student student);
+		void Update(Domain.AggregatesModel.Student.Student student);
+
 	}
 }

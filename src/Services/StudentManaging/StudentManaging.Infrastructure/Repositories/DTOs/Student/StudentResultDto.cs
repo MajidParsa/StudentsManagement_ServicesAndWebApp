@@ -7,6 +7,7 @@ namespace StudentManaging.Infrastructure.Repositories.DTOs.Student
 		public string FullName { get;  set; }
 		public string NationalCode { get;  set; }
 		public string StudentNumber { get;  set; }
+		public string DataStatus { get;  set; }
 
 	}
 }

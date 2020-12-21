@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using StudentManaging.API.Infrastructure.Filters;
-using StudentManaging.Infrastructure.Repositories.ConnectionFactories;
+using StudentManaging.Infrastructure.Repositories.ConnectionProvider;
 using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Data;
 
 namespace StudentManaging.API.CustomExtensions
@@ -81,7 +81,8 @@ namespace StudentManaging.API.CustomExtensions
 
 		public static IServiceCollection AddRepositories(this IServiceCollection services)
 		{
-			services.AddSingleton<IdbConnectionFactory, DbConnectionFactory>();
+			services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+			services.AddSingleton<IQueryDataServer, QueryDataServer>();
 
 			return services;
 		}

@@ -1,12 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using StudentManaging.Infrastructure.Exceptions;
 
-namespace StudentManaging.Infrastructure.Repositories.ConnectionFactories
+namespace StudentManaging.Infrastructure.Repositories.ConnectionProvider
 {
-	public class DbConnectionFactory : IdbConnectionFactory
+	public class DbConnectionFactory : IDbConnectionFactory
 	{
+
 		private readonly IConfiguration _configuration;
 
 		public DbConnectionFactory(IConfiguration configuration)
@@ -14,9 +15,7 @@ namespace StudentManaging.Infrastructure.Repositories.ConnectionFactories
 			_configuration = configuration;
 		}
 
-		public IDbConnection GetDefaultServerConnectionString() => Create("DefaultServer");
-
-		private IDbConnection Create(string connectionStringKey)
+		public IDbConnection Create(string connectionStringKey)
 		{
 			SqlConnection sqlConnection = GetSqlConnection(connectionStringKey);
 			sqlConnection.Open();

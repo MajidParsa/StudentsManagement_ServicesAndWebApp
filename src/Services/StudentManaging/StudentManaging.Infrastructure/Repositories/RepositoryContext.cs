@@ -1,13 +1,12 @@
 ﻿using System;
-using StudentManaging.Infrastructure.Repositories.ConnectionFactories;
 
 namespace StudentManaging.Infrastructure.Repositories
 {
 	public abstract class RepositoryContext
 	{
-		protected readonly IdbConnectionFactory _dbConnectionFactory;
+		protected readonly IdbConnectionProvider _dbConnectionFactory;
 
-		public RepositoryContext(IdbConnectionFactory dbConnectionFactory) => 
+		public RepositoryContext(IdbConnectionProvider dbConnectionFactory) => 
 			_dbConnectionFactory = dbConnectionFactory ?? throw new ArgumentNullException(nameof(dbConnectionFactory));
 	}
 }
