@@ -33,9 +33,15 @@ namespace StudentManaging.Domain.AggregatesModel.Student
 		}
 
 
-		public static Student CreateStudent(int id, string fullName, string nationalCode, string studentNumber)
+		public static Student CreateStudent(string fullName, string nationalCode, string studentNumber)
+		{
+			return new Student(0, fullName, nationalCode, studentNumber);
+		}
+
+		public static Student CreateExistingStudent(int id, string fullName, string nationalCode, string studentNumber)
 		{
 			return new Student(id, fullName, nationalCode, studentNumber);
 		}
+
 	}
 }

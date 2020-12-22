@@ -1,15 +1,29 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using StudentManaging.Application.Exceptions;
+using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Student;
 
 namespace StudentManaging.Application.Commands.Student
 {
 	public class AddStudentCommandHandler : IRequestHandler<AddStudentCommand, bool>
 	{
-		public Task<bool> Handle(AddStudentCommand request, CancellationToken cancellationToken)
+		private readonly IStudentEFRepository _studentEfRepository;
+
+		public AddStudentCommandHandler(IStudentEFRepository studentEfRepository)
 		{
-			throw new NotImplementedException();
+			_studentEfRepository = studentEfRepository ?? throw new StudentManagingApplicationException(nameof(studentEfRepository));
+		}
+
+		public async Task<bool> Handle(AddStudentCommand request, CancellationToken cancellationToken)
+		{
+			var student = Domain.AggregatesModel.Student.Student.CreateStudent(
+				request.FullName,
+				request.NationalCode,
+				request.StudentNumber
+			);
+
+			return await _studentEfRepository.Add(student);
 		}
 	}
 }

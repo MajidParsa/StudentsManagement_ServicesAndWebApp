@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using StudentManaging.API.Infrastructure.DTOs;
+using StudentManaging.Application.Commands.Student;
 using StudentManaging.Application.Queries.Student;
 using StudentManaging.Infrastructure.Repositories.DTOs.Student;
 
@@ -36,5 +37,21 @@ namespace StudentManaging.API.Controllers
 
 			return Ok(studentResultDto);
 		}
+
+		[Route("defineStudentsAsync")]
+		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> DefineStudentsAsync([FromBody] DefineRequestStudentDto defineRequestStudentDto)
+		{
+			await _mediator.Send(new AddStudentCommand()
+			{
+				FullName = defineRequestStudentDto.FullName,
+				NationalCode = defineRequestStudentDto.NationalCode,
+				StudentNumber = defineRequestStudentDto.StudentNumber
+			});
+
+			return Ok();
+		}
+
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using StudentManaging.Domain.SeedWork;
 
 namespace StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Student
@@ -6,12 +7,12 @@ namespace StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositorie
 	public class StudentEFRepository : IStudentEFRepository
 	{
 		public IUnitOfWork UnitOfWork { get; }
-		public Domain.AggregatesModel.Student.Student Add(Domain.AggregatesModel.Student.Student student)
+		public async Task<bool> Add(Domain.AggregatesModel.Student.Student student)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void Update(Domain.AggregatesModel.Student.Student student)
+		public async Task<bool> Update(Domain.AggregatesModel.Student.Student student)
 		{
 			throw new NotImplementedException();
 		}
