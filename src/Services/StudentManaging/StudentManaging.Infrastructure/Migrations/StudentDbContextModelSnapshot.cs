@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Data;
+using StudentManaging.Infrastructure.Repositories;
 
 namespace StudentManaging.Infrastructure.Migrations
 {
-    [DbContext(typeof(StudentDbContext))]
+    [DbContext(typeof(StudentContext))]
     partial class StudentDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

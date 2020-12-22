@@ -6,7 +6,7 @@ using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.St
 
 namespace StudentManaging.Application.Commands.Student
 {
-	public class AddStudentCommandHandler : IRequestHandler<AddStudentCommand, bool>
+	public class AddStudentCommandHandler : IRequestHandler<AddStudentCommand, Domain.AggregatesModel.Student.Student>
 	{
 		private readonly IStudentEFRepository _studentEfRepository;
 
@@ -15,7 +15,7 @@ namespace StudentManaging.Application.Commands.Student
 			_studentEfRepository = studentEfRepository ?? throw new StudentManagingApplicationException(nameof(studentEfRepository));
 		}
 
-		public async Task<bool> Handle(AddStudentCommand request, CancellationToken cancellationToken)
+		public async Task<Domain.AggregatesModel.Student.Student> Handle(AddStudentCommand request, CancellationToken cancellationToken)
 		{
 			var student = Domain.AggregatesModel.Student.Student.CreateStudent(
 				request.FullName,

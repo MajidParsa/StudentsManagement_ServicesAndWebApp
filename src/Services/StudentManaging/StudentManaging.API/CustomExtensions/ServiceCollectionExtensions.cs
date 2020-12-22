@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,10 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using StudentManaging.API.Infrastructure.Filters;
 using StudentManaging.Application.Commands.Student;
+using StudentManaging.Infrastructure.Repositories;
 using StudentManaging.Infrastructure.Repositories.ConnectionProvider;
 using StudentManaging.Infrastructure.Repositories.DapperRepositories.Student;
-using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Data;
+using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Student;
 
 namespace StudentManaging.API.CustomExtensions
 {
@@ -65,11 +67,25 @@ namespace StudentManaging.API.CustomExtensions
 
 		public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
 		{
-			services
-				.AddDbContext<StudentDbContext>
-				(options =>
-					options.UseSqlServer(configuration.GetConnectionString("QueryDataServer"))
+			//services
+			//	.AddDbContext<StudentContext>
+			//	(options =>
+			//		options.UseSqlServer(configuration.GetConnectionString("QueryDataServer"))
+			//	);
+
+			services.AddEntityFrameworkSqlServer()
+				.AddDbContext<StudentContext>(options =>
+					{
+						options.UseSqlServer(configuration["QueryDataServer"],
+							sqlServerOptionsAction: sqlOptions =>
+							{
+								sqlOptions.MigrationsAssembly(typeof(StudentContext).GetTypeInfo().Assembly.GetName().Name);
+								sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+							});
+					},
+					ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
 				);
+
 
 			return services;
 		}
@@ -87,6 +103,7 @@ namespace StudentManaging.API.CustomExtensions
 			services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 			services.AddSingleton<IQueryDataServer, QueryDataServer>();
 			services.AddSingleton<IStudentDapperRepository, StudentDapperRepository>();
+			services.AddSingleton<IStudentEFRepository, StudentEFRepository>();
 
 			return services;
 		}

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Data;
+using StudentManaging.Infrastructure.Repositories;
 
 namespace StudentManaging.Infrastructure.Migrations
 {
-    [DbContext(typeof(StudentDbContext))]
+    [DbContext(typeof(StudentContext))]
     [Migration("20201218111308_InitModel")]
     partial class InitModel
     {

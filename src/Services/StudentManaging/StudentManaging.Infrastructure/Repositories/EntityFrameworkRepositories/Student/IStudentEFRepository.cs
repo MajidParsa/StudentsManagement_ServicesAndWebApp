@@ -5,7 +5,7 @@ namespace StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositorie
 {
 	public interface IStudentEFRepository : IRepository<Domain.AggregatesModel.Student.Student>
 	{
-		Task<bool> Add(Domain.AggregatesModel.Student.Student student);
+		Task<Domain.AggregatesModel.Student.Student> Add(Domain.AggregatesModel.Student.Student student);
 		Task<bool> Update(Domain.AggregatesModel.Student.Student student);
 
 	}
