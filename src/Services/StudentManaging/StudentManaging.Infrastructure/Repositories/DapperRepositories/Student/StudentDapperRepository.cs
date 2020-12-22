@@ -24,7 +24,7 @@ namespace StudentManaging.Infrastructure.Repositories.DapperRepositories.Student
 			using IDbConnection connection = _queryDataServer.GetConnectionString();
 			DynamicParameters parameters = new DynamicParameters();
 			parameters.Add("@StudentId", studentId);
-			IEnumerable<StudentResultDto> students = 
+			var students = 
 				await connection.QueryAsync<StudentResultDto>("GetStudents", parameters, commandType: CommandType.StoredProcedure);
 
 			return students;

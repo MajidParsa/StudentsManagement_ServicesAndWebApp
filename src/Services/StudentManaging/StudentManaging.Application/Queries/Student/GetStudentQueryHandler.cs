@@ -20,7 +20,7 @@ namespace StudentManaging.Application.Queries.Student
 
 		public async Task<IEnumerable<StudentResultDto>> Handle(GetStudentQuery request, CancellationToken cancellationToken)
 		{
-			return await _studentDapperRepository.GetStudentsAsync(request.Id);
+			return (await _studentDapperRepository.GetStudentsAsync(request.Id));
 		}
 	}
 }

@@ -8,7 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using StudentManaging.API.Infrastructure.Filters;
+using StudentManaging.Application.Commands.Student;
 using StudentManaging.Infrastructure.Repositories.ConnectionProvider;
+using StudentManaging.Infrastructure.Repositories.DapperRepositories.Student;
 using StudentManaging.Infrastructure.Repositories.EntityFrameworkRepositories.Data;
 
 namespace StudentManaging.API.CustomExtensions
@@ -66,7 +68,7 @@ namespace StudentManaging.API.CustomExtensions
 			services
 				.AddDbContext<StudentDbContext>
 				(options =>
-					options.UseSqlServer(configuration.GetConnectionString("DefaultServer"))
+					options.UseSqlServer(configuration.GetConnectionString("QueryDataServer"))
 				);
 
 			return services;
@@ -75,6 +77,7 @@ namespace StudentManaging.API.CustomExtensions
 		public static IServiceCollection AddMediatR(this IServiceCollection services)
 		{
 			services.AddMediatR(Assembly.GetExecutingAssembly());
+			services.AddMediatR(typeof(AddStudentCommand).GetTypeInfo().Assembly);
 
 			return services;
 		}
@@ -83,6 +86,7 @@ namespace StudentManaging.API.CustomExtensions
 		{
 			services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 			services.AddSingleton<IQueryDataServer, QueryDataServer>();
+			services.AddSingleton<IStudentDapperRepository, StudentDapperRepository>();
 
 			return services;
 		}

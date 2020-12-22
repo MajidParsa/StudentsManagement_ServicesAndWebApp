@@ -7,16 +7,16 @@ namespace StudentManaging.Infrastructure.Repositories.ConnectionProvider
 {
 	public class QueryDataServer: IQueryDataServer
 	{
-		private readonly DbConnectionFactory _connectionFactory;
+		private readonly IDbConnectionFactory _dbConnectionFactory;
 
-		public QueryDataServer(DbConnectionFactory connectionFactory)
+		public QueryDataServer(IDbConnectionFactory dbConnectionFactory)
 		{
-			_connectionFactory = connectionFactory;
+			_dbConnectionFactory = dbConnectionFactory;
 		}
 
 		public IDbConnection GetConnectionString()
 		{
-			return _connectionFactory.Create("QueryDataServer");
+			return _dbConnectionFactory.Create("QueryDataServer");
 		}
 	}
 }

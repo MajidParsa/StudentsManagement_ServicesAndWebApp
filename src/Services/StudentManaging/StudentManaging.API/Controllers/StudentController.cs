@@ -3,6 +3,12 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using StudentManaging.API.Infrastructure.DTOs;
+using StudentManaging.Application.Queries.Student;
+using StudentManaging.Infrastructure.Repositories.DTOs.Student;
 
 namespace StudentManaging.API.Controllers
 {
@@ -10,29 +16,25 @@ namespace StudentManaging.API.Controllers
 	[Route("[controller]")]
 	public class StudentController : ControllerBase
 	{
-		private static readonly string[] Summaries = new[]
-		{
-			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-		};
+		private readonly IMediator _mediator;
 
-		private readonly ILogger<StudentController> _logger;
+		public StudentController(IMediator iMediator) => 
+			_mediator = iMediator ?? throw new ArgumentNullException(nameof(iMediator));
 
-		public StudentController(ILogger<StudentController> logger)
-		{
-			_logger = logger;
-		}
-
+		[Route("getStudentsAsync")]
 		[HttpGet]
-		public IEnumerable<WeatherForecast> Get()
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<ActionResult<StudentResultDto>> GetStudentsAsync(int id)
 		{
-			var rng = new Random();
-			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+			var studentResultDto = await _mediator.Send(new GetStudentQuery() { Id = id });
+			if (studentResultDto is null)
 			{
-				Date = DateTime.Now.AddDays(index),
-				TemperatureC = rng.Next(-20, 55),
-				Summary = Summaries[rng.Next(Summaries.Length)]
-			})
-			.ToArray();
+				return NotFound(id > 0 
+					? new {Message = $"دانشجویی با شناسه  {id} پیدا نشد."} 
+					: new { Message = $"هیچ اطلاعاتی جهت نمایش یافت نشد" });
+			}
+
+			return Ok(studentResultDto);
 		}
 	}
 }
