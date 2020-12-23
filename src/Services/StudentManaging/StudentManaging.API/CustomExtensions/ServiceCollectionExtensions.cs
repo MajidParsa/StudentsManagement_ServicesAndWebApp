@@ -67,11 +67,11 @@ namespace StudentManaging.API.CustomExtensions
 
 		public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
 		{
-			//services
-			//	.AddDbContext<StudentContext>
-			//	(options =>
-			//		options.UseSqlServer(configuration.GetConnectionString("QueryDataServer"))
-			//	);
+			services
+				.AddDbContext<StudentContext>
+				(options =>
+					options.UseSqlServer(configuration.GetConnectionString("QueryDataServer"))
+				);
 
 			services.AddEntityFrameworkSqlServer()
 				.AddDbContext<StudentContext>(options =>
