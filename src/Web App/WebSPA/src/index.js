@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import Home from './Home/Home'
 
-const root = document.getElementById("main")
-ReactDom.render(<div>First project Test</div>, root)
+ReactDom.render(<Home />, document.getElementById("root"))
